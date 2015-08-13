@@ -1,0 +1,10 @@
+module KafkaLogger;
+
+const topic_name: string; 
+const broker_name: string; 
+const sensor_name: string; 
+const client_id: string;
+const compression_codec: string; 
+const default_batch_size: string;
+const max_batch_size: string; 
+const max_batch_interval: string;
