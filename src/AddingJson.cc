@@ -18,11 +18,13 @@ using namespace threading::formatter;
 AddingJSON::AddingJSON(MsgThread* t,
 						TimeFormat tf,
 						char* argsensor_name,
-						char* argtype_name) : Formatter(t), surrounding_braces(true)
+						char* argtype_name,
+						bool logstash_format_timestamps) : Formatter(t), surrounding_braces(true)
 	{
 	timestamps = tf;
 	sensor_name = argsensor_name;
 	type_name = argtype_name;
+	logstash_timestamps = logstash_format_timestamps;
 	}
 
 AddingJSON::~AddingJSON()
@@ -148,15 +150,32 @@ bool AddingJSON::Describe(ODesc* desc, Value* val, const string& name) const
 				}
 			}
 			else if ( timestamps == TS_EPOCH )
+			{
+				if (logstash_timestamps){
+					desc->AddRaw("\"", 1);
+				}
+
 				desc->Add(val->val.double_val);
 
+				if (logstash_timestamps){
+					desc->AddRaw("\"", 1);
+				}
+			}
 			else if ( timestamps == TS_MILLIS )
 				{
 				// ElasticSearch uses milliseconds for timestamps and json only
 				// supports signed ints (uints can be too large).
 				uint64_t ts = (uint64_t) (val->val.double_val * 1000);
 				if ( ts < INT64_MAX )
+					if (logstash_timestamps){
+						desc->AddRaw("\"", 1);
+					}
+
 					desc->Add(ts);
+
+					if (logstash_timestamps){
+						desc->AddRaw("\"", 1);
+					}
 				else
 					{
 					GetThread()->Error(GetThread()->Fmt("time value too large for JSON milliseconds: %" PRIu64, ts));

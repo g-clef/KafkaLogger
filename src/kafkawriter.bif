@@ -8,3 +8,4 @@ const compression_codec: string;
 const default_batch_size: string;
 const max_batch_size: string; 
 const max_batch_interval: string;
+const logstash_style_timestamp: boolean;

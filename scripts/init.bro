@@ -2,6 +2,13 @@ module KafkaLogger;
 
 export {
 
+	# Logstash requires quotes around timestamp values, even if they 
+	# are doubles/floats. If you're consuming this data via logstash
+	# you will want this to be set to "T". If you're consuming
+	# these logs with something else, that's expecting timestamps
+	# to be raw double values, set this to "F".
+	const logstash_style_timestamp = F &redef;
+
 	# the name of the kafka topic to connect to & send messages to.
 	const topic_name = "logs" &redef; 
 	

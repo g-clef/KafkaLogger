@@ -25,7 +25,7 @@ class AddingJSON : public Formatter {
 			TS_MILLIS	// Milliseconds from the UNIX epoch.  Some consumers need this (e.g., elasticsearch).
 			};
 
-		AddingJSON(threading::MsgThread* t, TimeFormat tf, char* argsensor_name, char* argtype_name);
+		AddingJSON(threading::MsgThread* t, TimeFormat tf, char* argsensor_name, char* argtype_name, bool logstash_format_timestamps);
 		~AddingJSON();
 
 		bool AddingDescribe(ODesc* desc, threading::Value* val, const string& name="") const;
@@ -41,6 +41,7 @@ class AddingJSON : public Formatter {
 		bool surrounding_braces;
 		const char* sensor_name;
 		const char* type_name;
+		bool logstash_timestamps;
 };
 
 }}

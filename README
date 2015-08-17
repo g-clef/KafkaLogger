@@ -13,7 +13,7 @@ The added fields are:
 	and a "type" field, populated with the log type (dns, ssl, conn, etc).
 	
 The renamed fields are: 
-	"ts" will become "@timestamp", 
+	"ts" will become "timestamp", 
 	"id.orig_h"becomes "source_ip", 
 	"id.orig_p" becomes "source_port", 
 	"id.resp_h" becomes "dest_ip", and 
@@ -25,6 +25,8 @@ be done by editing the init.bro script for the KafkaLogger (though I don't recom
 to make the field renaming configurable in the future, but had problems with the bro table structure 
 in C++, so those are hard-coded in the C++ for the moment.
 
+(note: timestamps are sent as millisecond timestamps I.e., a UNIX-format timestamp that includees
+the milliseconds aka epoch * 1000)
 
 Configuration
 ================================
@@ -73,6 +75,15 @@ You can also redefine how the bro client will connect to kafka with the followin
 	redef KafkaLogger:: max_batch_interval = 10 sec;
 		how often to send logs (number of messages, bytes, and seconds).
 
+
+Lastly, if you are consuming the events with logstash, you will need to set
+	redef KafkaLogger::logstash_style_timestamp = T;
+		This will set quotes around the "timestamp" field. Logstash is apparently
+		looking for the timestamp to be a string, even if you configure it to be
+		looking for unix timestamp values. (BTW, you will want to configure
+		logstash with a filter that says: 
+			filter { date { match => ["timestamp", "UNIX_MS"] } } }
+		in order to get it to parse the timestamps properly.
 
 Requirements
 ================================

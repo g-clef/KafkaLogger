@@ -82,7 +82,8 @@ KafkaWriter::KafkaWriter(WriterFrontend* frontend) : WriterBackend(frontend)
     json_formatter = new threading::formatter::AddingJSON(this,
     								threading::formatter::AddingJSON::TS_MILLIS,
     								sensor_name,
-    								type_name
+    								type_name,
+    								BifConst::KafkaLogger::logstash_style_timestamp
     							   );
 }
 
@@ -125,7 +126,7 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 
 		if (strcmp(fields[i]->name, "ts") == 0)
 		{
-			newName = "@timestamp";
+			newName = "timestamp";
 		}
 		else if (strcmp(fields[i]->name, "id.orig_h") == 0)
 		{
