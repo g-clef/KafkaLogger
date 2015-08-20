@@ -70,9 +70,8 @@ You can also redefine how the bro client will connect to kafka with the followin
 		which compression codec to use. 0=none, 1=gzip, 2=snappy.
 	
 	
-	redef KafkaLogger::max_batch_size = 1000; 
-	redef KafkaLogger::max_byte_size = 10000000; 
-	redef KafkaLogger:: max_batch_interval = 10 sec;
+	redef KafkaLogger::max_batch_size = "1000"; 
+	redef KafkaLogger::max_batch_interval = "10000";
 		how often to send logs (number of messages, bytes, and seconds).
 
 
