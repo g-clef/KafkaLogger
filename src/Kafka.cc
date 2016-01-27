@@ -121,6 +121,9 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 	// even for tables that I know have data in them. I'm clearly doing
 	// something wrong. So,  hardcode the renames in the interest of
 	// getting something done.
+	//
+	// Also, need to remove "."s from names for ElasticSearch.
+	//
 	for (int i = 0; i < num_fields; i++){
 		std::string newName;
 
@@ -144,6 +147,23 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 		{
 			newName = "dest_port";
 		}
+		else if (strcmp(fields[i]->name, "seen.indicator") == 0)
+		{
+			newName = "indicator";
+		}
+		else if (strcmp(fields[i]->name, "seen.indicator_type") == 0)
+		{
+			newName = "indicator_type";
+		}
+		else if (strcmp(fields[i]->name, "seen.where") == 0)
+		{
+			newName = "seen_where";
+		}
+		else if (strcmp(fields[i]->name, "seen.node") == 0)
+		{
+			newName = "seen_node";
+		}
+
 
 		if (newName.empty()){
 			newFields[i] = new threading::Field(fields[i]->name,
