@@ -165,7 +165,7 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 		}
 		else if (strcmp(fields[i]->name, "data_channel.orig_h") == 0) //ftp
 		{
-			newName = "data_channel_orig_h";
+			newName = "data_channel_source_port";
 		}
 		else if (strcmp(fields[i]->name, "data_channel.passive") == 0)
 		{
@@ -173,17 +173,17 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 		}
 		else if (strcmp(fields[i]->name, "data_channel.resp_h") == 0)
 		{
-			newName = "data_channel_resp_h";
+			newName = "data_channel_dest_ip";
 		}
 		else if (strcmp(fields[i]->name, "data_channel.resp_p") == 0)
 		{
-			newName = "data_channel_resp_p";
+			newName = "data_channel_dest_port";
 		}
 		else if (strcmp(fields[i]->name, "bound.host") == 0) //socks
 		{
 			newName = "bound_host";
 		}
-		else if (strcmp(fields[i]->name, "bounds_host") == 0)
+		else if (strcmp(fields[i]->name, "bounds.host") == 0)
 		{
 			newName = "bounds_host";
 		}
