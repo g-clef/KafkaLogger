@@ -179,6 +179,18 @@ threading::Field** KafkaWriter::MakeFields(const threading::Field* const* fields
 		{
 			newName = "data_channel_resp_p";
 		}
+		else if (strcmp(fields[i]->name, "bound.host") == 0) //socks
+		{
+			newName = "bound_host";
+		}
+		else if (strcmp(fields[i]->name, "bounds_host") == 0)
+		{
+			newName = "bounds_host";
+		}
+		else if (strcmp(fields[i]->name, "bound.name") == 0)
+		{
+			newName = "bound_name";
+		}
 
 		if (newName.empty()){
 			newFields[i] = new threading::Field(fields[i]->name,
