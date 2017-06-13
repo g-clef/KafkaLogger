@@ -56,8 +56,8 @@ private:
 	int compression_codec_len;
 	char* security_protocol;
 	int security_protocol_len;
-	char* service_name;
-	int service_name_len;
+	char* kerberos_service_name;
+	int kerberos_service_name_len;
 	char* kerberos_keytab;
 	int kerberos_keytab_len;
 	char* kerberos_principal;
