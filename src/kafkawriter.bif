@@ -9,3 +9,7 @@ const default_batch_size: string;
 const max_batch_size: string; 
 const max_batch_interval: string;
 const logstash_style_timestamp: boolean;
+const security_protocol: string;
+const kerberos_service_name: string;
+const kerberos_keytab: string;
+const kerberos_principal: string;

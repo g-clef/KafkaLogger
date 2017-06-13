@@ -54,6 +54,14 @@ private:
 	int client_id_len;
 	char* compression_codec;
 	int compression_codec_len;
+	char* security_protocol;
+	int security_protocol_len;
+	char* service_name;
+	int service_name_len;
+	char* kerberos_keytab;
+	int kerberos_keytab_len;
+	char* kerberos_principal;
+	int kerberos_principal_len;
 	RdKafka::Conf *conf;
 	RdKafka::Conf *tconf;
 	RdKafka::Producer *producer;
