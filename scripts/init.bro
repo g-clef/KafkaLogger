@@ -96,5 +96,9 @@ export {
 							["Weird::LOG"] = "weird",
 							["X509::LOG"] = "x509"
 							) &redef;
+	const security_protocol = "NONE" &redef;	
+	const kerberos_service_name = "bro" &redef;
+	const kerberos_principal = "kafka/kafkabroker@domain.com" &redef;
+	const kerberos_keytab = "/etc/security/keytabs/bro.keytab" &redef;
 	
 }
