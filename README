@@ -74,15 +74,18 @@ You can also redefine how the bro client will connect to kafka with the followin
 	redef KafkaLogger::max_batch_interval = "10000";
 		how often to send logs (number of messages, bytes, and seconds).
 
-If you use the Kerberised version of kafka ,you'll need to switch this from PLAINTEXT to SASL_PLAINTEXT, 
+If you use the Kerberised version of kafka, you'll need to switch this from PLAINTEXT to SASL_PLAINTEXT or SASL_SSL, 
 make sure you've setup the keytab properly see 
 https://github.com/edenhill/librdkafka/wiki/Using-SASL-with-librdkafka for more info on how to perform
 that.
 	
 	redef KafkaLogger::security_protocol = "SASL_PLAINTEXT"
+
 	redef KafkaLogger::kerberos_service_name = "bro";
+
 	redef KafkaLogger::kerberos_keytab = "/etc/security/keytabs/bro.keytab";
 		Needs to be redefined if your keytab file is stored elsewhere.
+		
 	redef KafkaLogger::kerberos_principal = "kafka/kafkabroker@domain.com"
 		Note: the <kafkabroker> must exactly match the hostname part of the broker principal. 
 
