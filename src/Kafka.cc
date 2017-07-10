@@ -287,7 +287,7 @@ bool KafkaWriter::DoInit(const WriterInfo& info, int num_fields, const threading
 
 	producer = RdKafka::Producer::create(conf, errstr);
 	if (!producer) {
-		reporter->Error("Failed to create producer");
+		reporter->Error("Failed to create producer: %s", errstr.c_str());
 		return false;
 	}
 	topic = RdKafka::Topic::create(producer, topic_name, tconf, errstr);
