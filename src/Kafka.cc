@@ -267,19 +267,20 @@ bool KafkaWriter::DoInit(const WriterInfo& info, int num_fields, const threading
 	conf->set("queue.buffering.max.ms", max_batch_interval, errstr);
 	conf->set("producer.type", "async", errstr);
 
-	if (strcmp("PLAINTEXT", security_protocol) != 0) {
-		//Can be TLS for TLS only
-		//SASL_PLAINTEXT for kerberos only
-		//SASL_SSL for kerberos + ssl
+	if (strcmp("SASL_SSL", security_protocol) == 0) {
+		//if ssl is supported without kerberos then this will have 
+		//  to change to enable SSL but I'm not sure it make sense
 		conf->set("security.protocol", security_protocol, errstr);
 	}
-
-	if ( (strcmp("SASL_SSL", security_protocol) == 0) || (strcmp("SASL_SSL", security_protocol) ==0) ){
+	
+	if ( (strcmp("SASL_SSL", security_protocol) ==0 ) || (strcmp("SASL_PLAINTEXT", security_protocol) ==0 ) ){
 		//SASL is enabled and we need to setup the kerberos options.
+
 		conf->set("sasl.kerberos.service.name", kerberos_service_name, errstr);
 		conf->set("sasl.kerberos.keytab", kerberos_keytab, errstr);
 		conf->set("sasl.kerberos.principal", kerberos_principal, errstr);
 	}
+
 	if (tconf->set("partitioner_cb",  part_cb, errstr) != RdKafka::Conf::CONF_OK){
 		reporter->Error("failed to set partitioner for Kafka. %s", errstr.c_str());
 	}

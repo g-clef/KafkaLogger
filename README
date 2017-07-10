@@ -77,17 +77,24 @@ You can also redefine how the bro client will connect to kafka with the followin
 If you use the Kerberised version of kafka, you'll need to switch this from PLAINTEXT to SASL_PLAINTEXT or SASL_SSL, 
 make sure you've setup the keytab properly see 
 https://github.com/edenhill/librdkafka/wiki/Using-SASL-with-librdkafka for more info on how to perform
-that.
+that, you will also need a version of librdkafka built with ssl and kerberos support.
 	
 	redef KafkaLogger::security_protocol = "SASL_PLAINTEXT"
 
-	redef KafkaLogger::kerberos_service_name = "bro";
+	redef KafkaLogger::kerberos_service_name = "kafka";
+		Needs to be redifined to match the service name for Kafka.
 
 	redef KafkaLogger::kerberos_keytab = "/etc/security/keytabs/bro.keytab";
 		Needs to be redefined if your keytab file is stored elsewhere.
 		
 	redef KafkaLogger::kerberos_principal = "kafka/kafkabroker@domain.com"
 		Note: the <kafkabroker> must exactly match the hostname part of the broker principal. 
+
+If after setting up you get an error about "no common mechs", you proably need to install additionnal modules, on Debian and derivatives
+'''
+apt-get install libsasl2-modules-gssapi-heimda
+'''
+Should do the trick.
 
 Lastly, if you are consuming the events with logstash, you will need to set
 	redef KafkaLogger::logstash_style_timestamp = T;
